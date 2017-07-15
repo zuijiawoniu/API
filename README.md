@@ -10,7 +10,7 @@ Please email api@ycombinator.com if you find any bugs.
 
 ## URI and Versioning
 
-We hope to improve the API over time, and may later enable access to private per-user data using OAuth. The changes won't always be backward compatible, so we're going to use versioning. This first iteration will have URIs prefixed with https://hacker-news.firebaseio.com/v0/ and is structured as described below. There is currently no rate limit.
+We hope to improve the API over time, and may later enable access to private per-user data using OAuth. The changes won't always be backward compatible, so we're going to use versioning. This first iteration will have URIs prefixed with `https://hacker-news.firebaseio.com/v0/` and is structured as described below. There is currently no rate limit.
 
 For versioning purposes, only removal of a non-optional field or alteration of an existing field will be considered incompatible changes. *Clients should gracefully handle additional fields they don't expect, and simply ignore them.*
 
@@ -22,7 +22,7 @@ I'm not saying this to defend it - It's not the ideal public API, but it's the o
 
 ## Items
 
-Stories, comments, jobs, Ask HNs and even polls are just items. They're identified by their ids, which are unique integers, and live under https://hacker-news.firebaseio.com/v0/item/<id>.
+Stories, comments, jobs, Ask HNs and even polls are just items. They're identified by their ids, which are unique integers, and live under `/v0/item/<id>`.
 
 All items have some of the following properties, with required properties in bold:
 
@@ -35,7 +35,8 @@ by | The username of the item's author.
 time | Creation date of the item, in [Unix Time](http://en.wikipedia.org/wiki/Unix_time).
 text | The comment, story or poll text. HTML.
 dead | `true` if the item is dead.
-parent | The item's parent. For comments, either another comment or the relevant story. For pollopts, the relevant poll.
+parent | The comment's parent: either another comment or the relevant story.
+poll | The pollopt's associated poll.
 kids | The ids of the item's comments, in ranked display order.
 url | The URL of the story.
 score | The story's score, or the votes for a pollopt.
@@ -128,7 +129,7 @@ and one of its parts: https://hacker-news.firebaseio.com/v0/item/160705.json?pri
 {
   "by" : "pg",
   "id" : 160705,
-  "parent" : 160704,
+  "poll" : 160704,
   "score" : 335,
   "text" : "Yes, ban them; I'm tired of seeing Valleywag stories on News.YC.",
   "time" : 1207886576,
@@ -138,7 +139,7 @@ and one of its parts: https://hacker-news.firebaseio.com/v0/item/160705.json?pri
 
 ## Users
 
-Users are identified by case-sensitive ids, and live under https://hacker-news.firebaseio.com/v0/user/. Only users that have public activity (comments or story submissions) on the site are available through the API.
+Users are identified by case-sensitive ids, and live under `/v0/user/`. Only users that have public activity (comments or story submissions) on the site are available through the API.
 
 Field | Description
 ------|------------
@@ -168,7 +169,7 @@ The coolest part of Firebase is its support for change notifications. While you 
 
 ### Max Item ID
 
-The current largest item id is at https://hacker-news.firebaseio.com/v0/maxitem. You can walk backward from here to discover all items.
+The current largest item id is at `/v0/maxitem`. You can walk backward from here to discover all items.
 
 Example: https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty
 
@@ -178,7 +179,7 @@ Example: https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty
 
 ### New, Top and Best Stories
 
-Up to 500 top and new stories are at https://hacker-news.firebaseio.com/v0/topstories and https://hacker-news.firebaseio.com/v0/newstories. Best stories are at https://hacker-news.firebaseio.com/v0/beststories.
+Up to 500 top and new stories are at `/v0/topstories` and `/v0/newstories`. Best stories are at `/v0/beststories`.
 
 Example: https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty
 
@@ -188,7 +189,7 @@ Example: https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty
 
 ### Ask, Show and Job Stories
 
-Up to 200 of the latest Ask HN, Show HN, and Job stories are at https://hacker-news.firebaseio.com/v0/askstories, https://hacker-news.firebaseio.com/v0/showstories, and https://hacker-news.firebaseio.com/v0/jobstories.
+Up to 200 of the latest Ask HN, Show HN, and Job stories are at `/v0/askstories`, `/v0/showstories`, and `/v0/jobstories`.
 
 Example: https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty
 
@@ -198,7 +199,7 @@ Example: https://hacker-news.firebaseio.com/v0/askstories.json?print=pretty
 
 ### Changed Items and Profiles
 
-The item and profile changes are at https://hacker-news.firebaseio.com/v0/updates.
+The item and profile changes are at `/v0/updates`.
 
 Example: https://hacker-news.firebaseio.com/v0/updates.json?print=pretty
 
